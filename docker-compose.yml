@@ -1,0 +1,43 @@
+version: "3.4"
+
+services:
+  ms-reservations:
+    image: ms-reservations
+    build:
+      context: .
+    restart: always
+    ports:
+    - "8080:8080"
+    networks:
+      - backend-tier
+    links:
+      - ms-reservations-redis
+    environment:
+      - REDIS_HOST=redis://ms-reservations-redis:6379
+      - REDIS_PASSWORD=root
+    entrypoint:
+      ["./ms-reservations"]
+#    not working with redis
+#      ["./wait-for.sh", "-t", "10", "ms-reservations-redis:6379", "--", "./ms-reservations"]
+
+  ms-reservations-redis:
+    container_name: ms-reservations-redis
+    image: redis:6-alpine
+    restart: always
+    command: redis-server --requirepass root --port 6379 --bind 0.0.0.0
+    ports:
+      - "6379:6379"
+    volumes:
+      - ms_reservations_redis_data:/data
+#      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - backend-tier
+
+volumes:
+  ms_reservations_redis_data:
+
+networks:
+  backend-tier:
+    name: backend-tier
