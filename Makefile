@@ -1,7 +1,7 @@
 default: start logs
 
 service:=ms-reservations
-project:=bucetinha_linda
+project:=microservices
 
 .PHONY: start
 start:

@@ -12,6 +12,7 @@ fun Application.reservationRoutes() {
 
     routing {
         reservationsByFlightId(reservationServicePort)
+        addReservation(reservationServicePort)
     }
 }
 
