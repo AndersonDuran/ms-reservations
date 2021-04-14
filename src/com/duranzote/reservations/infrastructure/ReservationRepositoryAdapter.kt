@@ -1,6 +1,8 @@
 package com.duranzote.reservations.infrastructure
 
 import com.duranzote.reservations.application.ports.ReservationRepositoryPort
+import kotlinx.coroutines.reactive.awaitSingle
+import kotlinx.coroutines.reactive.awaitSingleOrNull
 import org.redisson.api.RedissonReactiveClient
 
 class ReservationRepositoryAdapter(
@@ -8,11 +10,9 @@ class ReservationRepositoryAdapter(
 ) : ReservationRepositoryPort {
 
     override suspend fun find(): String {
+        val xu = redissonReactiveClient.getMap<String, String>("biroska")
+        xu.put("teste", "1").awaitSingleOrNull()
 
-//        val xu = redissonReactiveClient.getMap<String, String>("biroska")
-//        return xu.put("key", "value").subscribe {
-//            it
-//        }
-        return ""
+        return xu.get("teste").awaitSingle()
     }
 }
