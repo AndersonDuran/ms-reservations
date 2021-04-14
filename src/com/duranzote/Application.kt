@@ -37,8 +37,8 @@ val koinModule = module {
 
     fun redissonProvider(): RedissonReactiveClient {
         val appConfig = HoconApplicationConfig(ConfigFactory.load())
-        val redisHost = appConfig.property("ktor.redis.host").getString() //"redis://127.0.0.1:6379"
-        val redisPassword = appConfig.property("ktor.redis.password").getString() //"root"
+        val redisHost = appConfig.property("ktor.redis.host").getString()
+        val redisPassword = appConfig.property("ktor.redis.password").getString()
 
         val config = Config()
         config.useSingleServer().setAddress(redisHost).password = redisPassword
