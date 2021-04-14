@@ -9,7 +9,7 @@ import com.typesafe.config.ConfigFactory
 import io.ktor.application.*
 import io.ktor.config.*
 import io.ktor.features.*
-import io.ktor.serialization.*
+import io.ktor.gson.*
 import org.koin.dsl.module
 import org.koin.ktor.ext.Koin
 import org.redisson.Redisson
@@ -22,7 +22,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation) {
-        json()
+        gson()
     }
 
     install(Koin) {

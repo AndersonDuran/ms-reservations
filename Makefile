@@ -14,6 +14,9 @@ stop:
 .PHONY: restart
 restart: stop start
 
+.PHONY: restart-ms
+restart-ms: build start
+
 .PHONY: logs
 logs:
 	docker-compose -p ${project} logs -f
@@ -41,3 +44,4 @@ clean: stop build start
 .PHONY: test
 test:
 	./gradlew test
+
